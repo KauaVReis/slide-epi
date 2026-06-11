@@ -518,9 +518,8 @@
       <li><a href="index.html#beneficios">Benefícios</a></li>
       <li><a href="index.html#cenario-nacional">Dados Reais</a></li>
       <li><a href="index.html#videos-demo">Demonstração</a></li>
-      <li><a href="#" class="active">Câmeras Ao Vivo</a></li>
+      <li><a href="#" class="active" onclick="fetch('run_detector.php')">Câmeras Ao Vivo</a></li>
     </ul>
-    <a href="index.html#videos-demo" class="btn-cta">Ver IA em Ação</a>
   </header>
 
   <!-- ============================
@@ -539,169 +538,24 @@
        TABS SECTION
   ============================= -->
   <section class="tabs-container">
-    <div class="tabs-nav">
-      <button class="tab-btn active" onclick="switchTab(event, 'welding-tab')">Linha de Soldagem</button>
-      <button class="tab-btn" onclick="switchTab(event, 'assembly-tab')">Setor de Montagem</button>
-      <button class="tab-btn" onclick="switchTab(event, 'painting-tab')">Cabine de Pintura</button>
-    </div>
-
-    <!-- Scenario 1: Welding -->
-    <div id="welding-tab" class="tab-content active">
-      <div class="scenario-photo-box">
-        <img src="welding.png" alt="Welding Scenario">
-        <div class="ai-overlay">
-          <div class="bbox" style="top: 15%; left: 35%; width: 30%; height: 75%; border-color: rgba(16,185,129,0.5);">
-            <span class="bbox-label" style="background: rgba(16,185,129,0.6);">Operador ID 8404</span>
-          </div>
-          <div class="bbox" style="top: 22%; left: 45%; width: 10%; height: 12%;">
-            <span class="bbox-label">MÁSCARA SOLDA [OK]</span>
-          </div>
-          <div class="bbox" style="top: 35%; left: 38%; width: 22%; height: 45%;">
-            <span class="bbox-label">AVENTAL RASPA [OK]</span>
-          </div>
-          <div class="bbox" id="weld-gloves" style="top: 55%; left: 33%; width: 9%; height: 12%;">
-            <span class="bbox-label">LUVAS RASPA [OK]</span>
-          </div>
-        </div>
+    <!-- Scenario 4: Live Feed (Somente Câmera) -->
+    <div id="live-tab" class="tab-content active" style="grid-template-columns: 1fr; padding: 20px;">
+      <div class="scenario-photo-box" id="camera-container" style="display: flex; justify-content: center; align-items: center; background: #000; position: relative; max-height: 70vh; box-shadow: 0 15px 35px rgba(227, 28, 37, 0.15); border: 2px solid var(--color-black-light);">
+        <button onclick="toggleFullScreen()" style="position: absolute; top: 15px; right: 15px; z-index: 10; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 6px; padding: 8px 12px; cursor: pointer; font-weight: bold; backdrop-filter: blur(4px); transition: all 0.2s;" onmouseover="this.style.background='var(--color-primary-red)'" onmouseout="this.style.background='rgba(0,0,0,0.6)'">
+          ⛶ Tela Cheia
+        </button>
+        <!-- MJPEG Stream via Flask na porta 5000 -->
+        <img src="http://localhost:5000/video_feed" alt="Câmera Ao Vivo (Iniciando...)" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.onerror=null; this.alt='Câmera offline. Clique em Câmeras Ao Vivo no menu para iniciar o servidor.';">
         <div class="camera-hud">
           <div class="rec-badge">
-            <div class="rec-dot"></div>REC CAM_WELD_04
+            <div class="rec-dot"></div>REC LIVE_STREAM
           </div>
-          <div>FPS: 30 | IND: 98.4%</div>
         </div>
       </div>
-      <div class="scenario-logs-box">
-        <h3 class="scenario-title">Linha de Soldagem</h3>
-        <p class="scenario-location">Unidade Votuporanga - Galpão 3B</p>
-        <div class="terminal-container" id="logs-weld">
-          <div class="terminal-line"><span class="timestamp">[02:14:15]</span> <span class="status-ok">SYSTEM</span>:
-            EPIGuard Vision Engine inicializada.</div>
-          <div class="terminal-line"><span class="timestamp">[02:14:16]</span> <span class="status-ok">CAMERA</span>:
-            Fluxo de vídeo CAM_WELD_04 conectado.</div>
-          <div class="terminal-line"><span class="timestamp">[02:14:18]</span> <span class="status-ok">DETECT</span>:
-            Operador ID: 8404 detectado no setor.</div>
-          <div class="terminal-line"><span class="timestamp">[02:14:19]</span> <span class="status-ok">EPI_OK</span>:
-            Máscara de Solda detectada.</div>
-          <div class="terminal-line"><span class="timestamp">[02:14:20]</span> <span class="status-ok">EPI_OK</span>:
-            Protetor Auricular detectado.</div>
-          <div class="terminal-line"><span class="timestamp">[02:14:22]</span> <span class="status-ok">EPI_OK</span>:
-            Avental de Raspa detectado.</div>
-        </div>
-        <div class="simulation-ctrl">
-          <button class="btn-simulate" onclick="simulateAlert('weld')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-            Simular Alerta de Desvio
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Scenario 2: Assembly -->
-    <div id="assembly-tab" class="tab-content">
-      <div class="scenario-photo-box">
-        <img src="assembly.png" alt="Assembly Scenario">
-        <div class="ai-overlay">
-          <div class="bbox" style="top: 15%; left: 30%; width: 35%; height: 75%; border-color: rgba(16,185,129,0.5);">
-            <span class="bbox-label" style="background: rgba(16,185,129,0.6);">Operador ID 7490</span>
-          </div>
-          <div class="bbox" style="top: 18%; left: 42%; width: 11%; height: 10%;">
-            <span class="bbox-label">CAPACETE [OK]</span>
-          </div>
-          <div class="bbox" id="assm-glasses" style="top: 26%; left: 44%; width: 8%; height: 5%;">
-            <span class="bbox-label">ÓCULOS [OK]</span>
-          </div>
-          <div class="bbox" style="top: 75%; left: 38%; width: 20%; height: 12%;">
-            <span class="bbox-label">BOTAS [OK]</span>
-          </div>
-        </div>
-        <div class="camera-hud">
-          <div class="rec-badge">
-            <div class="rec-dot"></div>REC CAM_ASSM_09
-          </div>
-          <div>FPS: 30 | IND: 99.1%</div>
-        </div>
-      </div>
-      <div class="scenario-logs-box">
-        <h3 class="scenario-title">Setor de Montagem</h3>
-        <p class="scenario-location">Unidade Mirassol - Linha 2</p>
-        <div class="terminal-container" id="logs-assm">
-          <div class="terminal-line"><span class="timestamp">[02:15:01]</span> <span class="status-ok">SYSTEM</span>:
-            EPIGuard Vision Engine inicializada.</div>
-          <div class="terminal-line"><span class="timestamp">[02:15:02]</span> <span class="status-ok">CAMERA</span>:
-            Fluxo de vídeo CAM_ASSM_09 conectado.</div>
-          <div class="terminal-line"><span class="timestamp">[02:15:04]</span> <span class="status-ok">DETECT</span>:
-            Operador ID: 7490 detectado no setor.</div>
-          <div class="terminal-line"><span class="timestamp">[02:15:05]</span> <span class="status-ok">EPI_OK</span>:
-            Capacete de Segurança detectado.</div>
-          <div class="terminal-line"><span class="timestamp">[02:15:06]</span> <span class="status-ok">EPI_OK</span>:
-            Óculos de Proteção detectado.</div>
-          <div class="terminal-line"><span class="timestamp">[02:15:08]</span> <span class="status-ok">EPI_OK</span>:
-            Calçado Biqueira detectado.</div>
-        </div>
-        <div class="simulation-ctrl">
-          <button class="btn-simulate" onclick="simulateAlert('assm')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-            Simular Alerta de Desvio
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Scenario 3: Painting -->
-    <div id="painting-tab" class="tab-content">
-      <div class="scenario-photo-box">
-        <img src="painting.png" alt="Painting Scenario">
-        <div class="ai-overlay">
-          <div class="bbox" style="top: 15%; left: 30%; width: 35%; height: 75%; border-color: rgba(16,185,129,0.5);">
-            <span class="bbox-label" style="background: rgba(16,185,129,0.6);">Operador ID 9081</span>
-          </div>
-          <div class="bbox" id="paint-respirator" style="top: 25%; left: 43%; width: 9%; height: 9%;">
-            <span class="bbox-label">RESPIRADOR [OK]</span>
-          </div>
-          <div class="bbox" style="top: 32%; left: 33%; width: 28%; height: 55%;">
-            <span class="bbox-label">MACACÃO PINTURA [OK]</span>
-          </div>
-        </div>
-        <div class="camera-hud">
-          <div class="rec-badge">
-            <div class="rec-dot"></div>REC CAM_PNT_02
-          </div>
-          <div>FPS: 30 | IND: 97.8%</div>
-        </div>
-      </div>
-      <div class="scenario-logs-box">
-        <h3 class="scenario-title">Cabine de Pintura</h3>
-        <p class="scenario-location">Unidade Votuporanga II - Cabine A</p>
-        <div class="terminal-container" id="logs-paint">
-          <div class="terminal-line"><span class="timestamp">[02:16:30]</span> <span class="status-ok">SYSTEM</span>:
-            EPIGuard Vision Engine inicializada.</div>
-          <div class="terminal-line"><span class="timestamp">[02:16:31]</span> <span class="status-ok">CAMERA</span>:
-            Fluxo de vídeo CAM_PNT_02 conectado.</div>
-          <div class="terminal-line"><span class="timestamp">[02:16:33]</span> <span class="status-ok">DETECT</span>:
-            Operador ID: 9081 detectado no setor.</div>
-          <div class="terminal-line"><span class="timestamp">[02:16:34]</span> <span class="status-ok">EPI_OK</span>:
-            Máscara Respiratória detectada.</div>
-          <div class="terminal-line"><span class="timestamp">[02:16:35]</span> <span class="status-ok">EPI_OK</span>:
-            Macacão de Pintura detectado.</div>
-        </div>
-        <div class="simulation-ctrl">
-          <button class="btn-simulate" onclick="simulateAlert('paint')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-            Simular Alerta de Desvio
-          </button>
-        </div>
+      <div style="text-align: center; margin-top: 40px; padding-bottom: 20px;">
+        <a href="IA_apresentacao/index.php" class="btn-cta" style="font-size: 16px; padding: 15px 40px;">
+          Acessar Painel da IA (Histórico de Detecções)
+        </a>
       </div>
     </div>
   </section>
@@ -873,6 +727,28 @@
         });
       });
     })();
+    // Fullscreen toggle
+    function toggleFullScreen() {
+      const container = document.getElementById('camera-container');
+      if (!document.fullscreenElement) {
+        if (container.requestFullscreen) {
+          container.requestFullscreen();
+        } else if (container.webkitRequestFullscreen) { /* Safari */
+          container.webkitRequestFullscreen();
+        } else if (container.msRequestFullscreen) { /* IE11 */
+          container.msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+          document.msExitFullscreen();
+        }
+      }
+    }
+
   </script>
 </body>
 

@@ -1,0 +1,16 @@
+Iniciando sistema de detecção com Rastreamento Estabilizado...
+ * Serving Flask app 'detector_web'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.91.136.149:5000
+Press CTRL+C to quit
+127.0.0.1 - - [11/Jun/2026 16:17:29] "GET /video_feed HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2026 16:18:24] "GET /video_feed HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2026 16:18:52] "GET /video_feed HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2026 16:31:24] "GET /video_feed HTTP/1.1" 200 -
+WARNING not enough matching points
+WARNING not enough matching points
+127.0.0.1 - - [11/Jun/2026 16:32:00] "GET /video_feed HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2026 16:32:25] "GET /video_feed HTTP/1.1" 200 -

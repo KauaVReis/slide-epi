@@ -270,16 +270,8 @@ addHeader(slide3, 'Os Gargalos da Gestão Manual de EPIs', 'O Problema');
 // We will use 4 grid cards to show the specific problems
 const problems = [
   {
-    title: 'Controle Manual e Descentralizado',
-    desc: 'Planilhas dispersas e fichas de EPI em papel que dificultam o cruzamento ágil de informações entre setores.'
-  },
-  {
     title: 'Dificuldade de Rastreabilidade',
     desc: 'Impossibilidade de auditar em segundos o histórico de entregas, trocas e vida útil de equipamentos por colaborador.'
-  },
-  {
-    title: 'Perdas, Desvios e Extravios',
-    desc: 'Falta de controle de estoque em tempo real gera compras emergenciais desnecessárias e desperdício de capital.'
   },
   {
     title: 'Burocracia em Auditorias',
@@ -314,11 +306,6 @@ addHeader(slide4, 'O Custo Invisível da Ineficiência na Gestão de EPIs', 'Imp
 // Let's create a horizontal layout of 4 columns, each showing a metric or specific impact
 const impacts = [
   {
-    title: 'Custos Elevados',
-    desc: 'Desperdício financeiro com compras duplicadas, substituições prematuras e estoque sem giro controlado.',
-    accent: COLORS.RED
-  },
-  {
     title: 'Riscos de Acidentes',
     desc: 'Atraso na troca de EPIs vencidos ou desgastados expõe diretamente os trabalhadores a acidentes graves.',
     accent: COLORS.RED
@@ -336,9 +323,9 @@ const impacts = [
 ];
 
 impacts.forEach((imp, idx) => {
-  const x = 0.5 + idx * 3.05;
+  const x = 0.5 + idx * 4.0;
   addCard(slide4, {
-    x, y: 1.8, w: 2.85, h: 4.8,
+    x, y: 1.8, w: 3.5, h: 4.8,
     accentLine: true,
     title: imp.title,
     titleColor: COLORS.NAVY,
@@ -374,7 +361,7 @@ slide5.addText('Uma solução de ponta a ponta desenvolvida para centralizar, au
 const pillars = [
   {
     title: 'Centralização Absoluta',
-    desc: 'Unifica todos os setores, almoxarifados e registros em um único dashboard acessível em tempo real.'
+    desc: 'Unifica todos os setores e registros em um único dashboard acessível em tempo real.'
   },
   {
     title: 'Automação e Alertas',
@@ -408,11 +395,10 @@ addHeader(slide6, 'Recursos Desenhados para a Dinâmica Industrial', 'Funcionali
 // Grid of 6 smaller functional blocks
 const funcs = [
   { title: 'Gestão de Colaboradores', desc: 'Associação rápida de cargos a perfis de risco e EPIs obrigatórios.' },
-  { title: 'Catálogo & Estoque', desc: 'Controle de saldo mínimo, validade de C.A. e lotes de fabricante.' },
   { title: 'Registro de Entregas', desc: 'Assinatura eletrônica, digital ou via crachá RFID integrado.' },
   { title: 'Histórico & Auditoria', desc: 'Rastreamento completo das movimentações com exportação em um clique.' },
   { title: 'Alertas Inteligentes', desc: 'Notificações automáticas para prazos de validade e substituições necessárias.' },
-  { title: 'Business Intelligence', desc: 'Relatórios gerenciais consolidados para otimização de custos e consumos.' }
+  { title: 'Business Intelligence', desc: 'Relatórios gerenciais consolidados para otimização de conformidade e consumos.' }
 ];
 
 funcs.forEach((f, idx) => {
@@ -486,12 +472,6 @@ const benefits = [
     color: COLORS.BLUE
   },
   {
-    cat: 'Financeiro',
-    title: 'Redução de Custos',
-    desc: 'Economia média estimada em 15% a 25% com a eliminação de extravios e compras redundantes.',
-    color: COLORS.ORANGE
-  },
-  {
     cat: 'Conformidade',
     title: 'Segurança Jurídica',
     desc: 'Histórico robusto de conformidade pronto para auditorias e fiscalizações a qualquer momento.',
@@ -500,13 +480,11 @@ const benefits = [
 ];
 
 benefits.forEach((b, idx) => {
-  const col = idx % 2;
-  const row = Math.floor(idx / 2);
-  const x = 0.5 + col * 6.1;
-  const y = 1.8 + row * 2.6;
+  const x = 0.5 + idx * 3.9;
+  const y = 1.8;
 
   addCard(slide8, {
-    x, y, w: 5.7, h: 2.2,
+    x, y, w: 3.5, h: 2.2,
     border: b.color,
     accentLine: true,
     title: `${b.cat}: ${b.title}`,
